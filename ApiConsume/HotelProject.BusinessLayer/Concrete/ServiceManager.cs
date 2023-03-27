@@ -41,6 +41,7 @@ namespace HotelProject.BusinessLayer.Concrete
         public void TUpdate(Service t)
         {
             _serviceDal.Update(t);
+
         }
     }
 }
