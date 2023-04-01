@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-
 namespace HotelProject.WebUI.Controllers
 {
     public class StaffController : Controller
@@ -16,9 +15,9 @@ namespace HotelProject.WebUI.Controllers
         {
             _httpClientFactory = httpClientFactory;
         }
-
         public async Task<IActionResult> Index()
         {
+
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("http://localhost:10439/api/Staff");
             if (responseMessage.IsSuccessStatusCode)
@@ -30,6 +29,5 @@ namespace HotelProject.WebUI.Controllers
 
             return View();
         }
-         
     }
 }
