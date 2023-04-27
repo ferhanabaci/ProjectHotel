@@ -25,12 +25,12 @@ namespace HotelProject.DataAccessLayer.EntityFramework
         //    context.SaveChanges();
         //}
 
-        //public void BookingStatusChangeApproved2(int id)
-        //{
-        //    var context = new Context();
-        //    var values = context.Bookings.Find(id);
-        //    values.Status = "Onaylandı";
-        //    context.SaveChanges();
-        //}
+        public void BookingStatusChangeApproved2(int id)
+        {
+            var context = new Context();
+            var values = context.Bookings.Find(id);
+            values.Status = "Onaylandı";
+            context.SaveChanges();
+        }
     }
 }
