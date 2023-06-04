@@ -28,6 +28,11 @@ namespace HotelProject.BusinessLayer.Concrete
             throw new NotImplementedException();
         }
 
+        public int TGetContactCount()
+        {
+            return _contactDal.GetContactCount();
+        }
+
         public List<Contact> TGetList()
         {
             throw new NotImplementedException();
