@@ -1,4 +1,5 @@
-﻿@{
+﻿﻿
+@{
     Layout = null;
 }
 
@@ -13,6 +14,8 @@
         @await Component.InvokeAsync("_SpinnerPartial")
 
         @await Component.InvokeAsync("_NavbarPartial")
+
+        @await Component.InvokeAsync("_BookingCoverPartial")
 
         @await Html.PartialAsync("/Views/Booking/AddBooking.cshtml")
 
