@@ -28,6 +28,7 @@ namespace HotelProject.WebUI
             services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<Context>();
             services.AddHttpClient();
             services.AddTransient<IValidator<CreateGuestDto>, CreateGuestValidator>();
+            services.AddTransient<IValidator<UpdateGuestDto>, UpdateGuestValidator>();
             services.AddControllersWithViews().AddFluentValidation();
             services.AddRazorPages();
         }
