@@ -1,20 +1,19 @@
-﻿using HotelProject.WebUI.Models.Staff;
+﻿using HotelProject.WebUI.Dtos.RoomDto;
+using HotelProject.WebUI.Models.Staff;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HotelProject.WebUI.Controllers
 {
-    public class StaffController : Controller
+    public class AdminRoomController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public StaffController(IHttpClientFactory httpClientFactory)
+        public AdminRoomController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
@@ -22,11 +21,11 @@ namespace HotelProject.WebUI.Controllers
         {
 
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:5000/api/Staff");
+            var responseMessage = await client.GetAsync("http://localhost:5000/api/Room");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<StaffViwModel>>(jsonData); // Burda Json türünde bir data bize geliyordu
+                var values = JsonConvert.DeserializeObject<List<ResultRoomDto>>(jsonData); // Burda Json türünde bir data bize geliyordu
                 return View(values);
             }
 
@@ -34,29 +33,29 @@ namespace HotelProject.WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddStaff()
+        public IActionResult AddRoom()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStaff(AddStaffViewModel model)
+        public async Task<IActionResult> AddRoom(CreateRoomDto model)
         {
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(model);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("http://localhost:5000/api/Staff", stringContent);
+            var responseMessage = await client.PostAsync("http://localhost:5000/api/Room", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
             }
             return View();
         }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStaff(int id)
+
+        public async Task<IActionResult> DeleteRoom(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"http://localhost:5000/api/Staff/{id}");
+            var responseMessage = await client.DeleteAsync($"http://localhost:5000/api/Room/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -65,14 +64,14 @@ namespace HotelProject.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateStaff(int id)
+        public async Task<IActionResult> UpdateRoom(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"http://localhost:5000/api/Staff/{id}");
+            var responseMessage = await client.GetAsync($"http://localhost:5000/api/Room/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateStaffModel>(jsonData);
+                var values = JsonConvert.DeserializeObject<UpdateRoomDto>(jsonData);
                 return View(values);
             }
             return View();
@@ -80,18 +79,17 @@ namespace HotelProject.WebUI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UpdateStaff(UpdateStaffModel model)
+        public async Task<IActionResult> UpdateRoom(UpdateRoomDto updateRoomDto)
         {
             var client = _httpClientFactory.CreateClient();
-            var jsonData= JsonConvert.SerializeObject(model);
+            var jsonData = JsonConvert.SerializeObject(updateRoomDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("http://localhost:5000/api/Staff", stringContent);
+            var responseMessage = await client.PutAsync("http://localhost:5000/api/Room", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
-              return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             return View();
         }
-
     }
 }
